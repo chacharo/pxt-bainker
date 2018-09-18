@@ -211,87 +211,7 @@ namespace bainker {
         setPwm(index + 7, 0, value)
     }
 
-    //% blockId=bainker_stepper_degree block="Stepper 28BYJ-48|%index|degree %degree"
-    //% weight=90
-    export function StepperDegree(index: Steppers, degree: number): void {
-        if (!initialized) {
-            initPCA9685()
-        }
-        setStepper(index, degree > 0);
-        degree = Math.abs(degree);
-        basic.pause(10240 * degree / 360);
-        MotorStopAll()
-    }
 
-
-    //% blockId=bainker_stepper_turn block="Stepper 28BYJ-48|%index|turn %turn"
-    //% weight=90
-    export function StepperTurn(index: Steppers, turn: Turns): void {
-        let degree = turn;
-        StepperDegree(index, degree);
-    }
-
-    //% blockId=bainker_stepper_dual block="Dual Stepper(Degree) |M1 %degree1| M2 %degree2"
-    //% weight=89
-    export function StepperDual(degree1: number, degree2: number): void {
-        if (!initialized) {
-            initPCA9685()
-        }
-        setStepper(1, degree1 > 0);
-        setStepper(2, degree2 > 0);
-        degree1 = Math.abs(degree1);
-        degree2 = Math.abs(degree2);
-        basic.pause(10240 * Math.min(degree1, degree2) / 360);
-        if (degree1 > degree2) {
-            stopMotor(3); stopMotor(4);
-            basic.pause(10240 * (degree1 - degree2) / 360);
-        } else {
-            stopMotor(1); stopMotor(2);
-            basic.pause(10240 * (degree2 - degree1) / 360);
-        }
-
-        MotorStopAll()
-    }
-
-	/**
-	 * Stepper Car move forward
-	 * @param distance Distance to move in cm; eg: 10, 20
-	 * @param diameter diameter of wheel in mm; eg: 48
-	*/
-    //% blockId=bainker_stpcar_move block="Car Forward|Diameter(cm) %distance|Wheel Diameter(mm) %diameter"
-    //% weight=88
-    export function StpCarMove(distance: number, diameter: number): void {
-        if (!initialized) {
-            initPCA9685()
-        }
-        let delay = 10240 * 10 * distance / 3 / diameter; // use 3 instead of pi
-        setStepper(1, delay > 0);
-        setStepper(2, delay > 0);
-        delay = Math.abs(delay);
-        basic.pause(delay);
-        MotorStopAll()
-    }
-
-	/**
-	 * Stepper Car turn by degree
-	 * @param turn Degree to turn; eg: 90, 180, 360
-	 * @param diameter diameter of wheel in mm; eg: 48
-	 * @param track track width of car; eg: 125
-	*/
-    //% blockId=bainker_stpcar_turn block="Car Turn|Degree %turn|Wheel Diameter(mm) %diameter|Track(mm) %track"
-    //% weight=87
-    //% blockGap=50
-    export function StpCarTurn(turn: number, diameter: number, track: number): void {
-        if (!initialized) {
-            initPCA9685()
-        }
-        let delay = 10240 * turn * track / 360 / diameter;
-        setStepper(1, delay < 0);
-        setStepper(2, delay > 0);
-        delay = Math.abs(delay);
-        basic.pause(delay);
-        MotorStopAll()
-    }
 
     //% blockId=bainker_motor_run block="Motor|%index|speed %speed"
     //% weight=85
@@ -365,7 +285,6 @@ namespace bainker {
 
     //% blockId=bainker_stop_all block="Motor Stop All"
     //% weight=79
-    //% blockGap=50
     export function MotorStopAll(): void {
         for (let idx = 1; idx <= 4; idx++) {
             stopMotor(idx);
@@ -379,14 +298,119 @@ namespace bainker {
 	*/
     //% blockId=bainker_forward block="Forward|speed %speed |delay %delay|s"
     //% weight=79
-    //% blockGap=50
     //% speed.min=-255 speed.max=255
     export function Forward(speed: number, delay: number): void {
-        MotorRun(M1A, speed);
-        MotorRun(M1B, speed);
+        MotorRun(1, speed);
+        MotorRun(2, speed);
         basic.pause(delay * 1000);
-        MotorRun(M1A, 0);
-        MotorRun(M1B, 0);
+        MotorRun(1, 0);
+        MotorRun(2, 0);
+    }
+
+	/**
+	 * Back car with delay
+	 * @param speed [-255-255] speed of motor; eg: 150, -150
+	 * @param delay seconde delay to stop; eg: 1
+	*/
+    //% blockId=bainker_back block="Back|speed %speed |delay %delay|s"
+    //% weight=79
+    //% speed.min=-255 speed.max=255
+    export function Back(speed: number, delay: number): void {
+        MotorRun(1, speed);
+        MotorRun(2, speed);
+        basic.pause(delay * 1000);
+        MotorRun(1, 0);
+        MotorRun(2, 0);
+    }
+
+	/**
+	 * Turn left with delay
+	 * @param speed [-255-255] speed of motor; eg: 150, -150
+	 * @param delay seconde delay to stop; eg: 1
+	*/
+    //% blockId=bainker_turnLeft block="Turn Left|speed %speed |delay %delay|s"
+    //% weight=79
+    //% speed.min=-255 speed.max=255
+    export function TurnLeft(speed: number, delay: number): void {
+        MotorRun(1, -speed);
+        MotorRun(2, speed);
+        basic.pause(delay * 1000);
+        MotorRun(1, 0);
+        MotorRun(2, 0);
+    }
+
+	/**
+	 * Turn right with delay
+	 * @param speed [-255-255] speed of motor; eg: 150, -150
+	 * @param delay seconde delay to stop; eg: 1
+	*/
+    //% blockId=bainker_turnRight block="Turn right|speed %speed |delay %delay|s"
+    //% weight=79
+    //% speed.min=-255 speed.max=255
+    export function TurnRight(speed: number, delay: number): void {
+        MotorRun(1, speed);
+        MotorRun(2, -speed);
+        basic.pause(delay * 1000);
+        MotorRun(1, 0);
+        MotorRun(2, 0);
+    }
+
+	/**
+	 * Car left speed
+	 * @param speed [-255-255] speed of motor; eg: 150, -150
+	*/
+    //% blockId=bainker_leftSpeed block="Left Speed|speed %speed"
+    //% weight=79
+    //% speed.min=-255 speed.max=255
+    export function LeftSpeed(speed: number): void {
+        MotorRun(1, speed);
+    }
+
+	/**
+	 * Car right speed
+	 * @param speed [-255-255] speed of motor; eg: 150, -150
+	*/
+    //% blockId=bainker_rightSpeed block="Right Speed|speed %speed"
+    //% weight=79
+    //% speed.min=-255 speed.max=255
+    export function RightSpeed(speed: number): void {
+        MotorRun(2, speed);
+    }
+
+    /**
+	 * Tracking count cross
+	 * @param speed [-255-255] speed of motor; eg: 150, -150
+	 * @param delay seconde delay to stop; eg: 1
+	*/
+    //% blockId=bainker_countCross block="Tracking |speed %speed|CrossL %crossL|CrossR %crossR|delay %delay"
+    //% weight=79
+    //% speed.min=-255 speed.max=255
+    //% crossL.min=0 crossL.max=99
+    //% crossR.min=0 crossR.max=99
+    export function countCross(speed: number, crossL: number, crossR: number, delay: number): void {
+        let CL = 0;
+        let CR = 0;
+        let TL = 0;
+        let TR = 0;
+        while (crossL > CL || crossR > CR) {
+            if (pins.digitalReadPin(DigitalPin.P13) == 1) {
+                MotorRun(2, speed);
+            } else { MotorRun(2, 0); }
+            if (pins.digitalReadPin(DigitalPin.P14) == 1) {
+                MotorRun(1, speed);
+            } else { MotorRun(1, 0); }
+            if (pins.digitalReadPin(DigitalPin.P12) == 0 && input.runningTime() - TR > 1000) {
+                CR+=1;
+                TR = input.runningTime();
+            }
+            if (pins.digitalReadPin(DigitalPin.P15) == 0 && input.runningTime() - TL > 1000) {
+                CL += 1;
+                TL = input.runningTime();
+            }
+        }
+        basic.pause(delay);
+        MotorRun(1, 0);
+        MotorRun(2, 0);
     }
 
 
