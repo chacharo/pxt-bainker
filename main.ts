@@ -1,7 +1,7 @@
 /*
 modified from pxt-servo/servodriver.ts
 load dependency
-"bainker1": "file:../pxt-bainker"
+"bainker": "file:../pxt-bainker"
 */
 
 
