@@ -6,7 +6,7 @@ load dependency
 
 
 //% color="#0095d9" weight=10 icon="\uf1b2" block="Bansot"
-namespace bainker1 {
+namespace bainker {
     const PCA9685_ADDRESS = 0x40
     const MODE1 = 0x00
     const MODE2 = 0x01
