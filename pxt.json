@@ -9,7 +9,7 @@
     "files": [
         "README.md",
         "main.ts",
-        "_locales/zh/bainker1-strings.json"
+        "_locales/zh/bainker-strings.json"
     ],
     "testFiles": [
         "test.ts"
