@@ -1,7 +1,7 @@
 {
-    "name": "Bainker1",
+    "name": "Bainker",
     "version": "0.2.1",
-    "description": "Bainker1, a 3D printed car controlled by microbit",
+    "description": "Bainker, a 3D printed car controlled by microbit",
     "license": "MIT",
     "dependencies": {
         "core": "*"

@@ -1,7 +1,7 @@
 /*
 modified from pxt-servo/servodriver.ts
 load dependency
-"bainker1": "file:../pxt-bainker1"
+"bainker1": "file:../pxt-bainker"
 */
 
 
@@ -211,7 +211,7 @@ namespace bainker1 {
         setPwm(index + 7, 0, value)
     }
 
-    //% blockId=bansotblocks_stepper_degree block="Stepper 28BYJ-48|%index|degree %degree"
+    //% blockId=bainker_stepper_degree block="Stepper 28BYJ-48|%index|degree %degree"
     //% weight=90
     export function StepperDegree(index: Steppers, degree: number): void {
         if (!initialized) {
@@ -224,14 +224,14 @@ namespace bainker1 {
     }
 
 
-    //% blockId=bainker1_stepper_turn block="Stepper 28BYJ-48|%index|turn %turn"
+    //% blockId=bainker_stepper_turn block="Stepper 28BYJ-48|%index|turn %turn"
     //% weight=90
     export function StepperTurn(index: Steppers, turn: Turns): void {
         let degree = turn;
         StepperDegree(index, degree);
     }
 
-    //% blockId=bainker1_stepper_dual block="Dual Stepper(Degree) |M1 %degree1| M2 %degree2"
+    //% blockId=bainker_stepper_dual block="Dual Stepper(Degree) |M1 %degree1| M2 %degree2"
     //% weight=89
     export function StepperDual(degree1: number, degree2: number): void {
         if (!initialized) {
@@ -258,7 +258,7 @@ namespace bainker1 {
 	 * @param distance Distance to move in cm; eg: 10, 20
 	 * @param diameter diameter of wheel in mm; eg: 48
 	*/
-	//% blockId=bainker1_stpcar_move block="Car Forward|Diameter(cm) %distance|Wheel Diameter(mm) %diameter"
+	//% blockId=bainker_stpcar_move block="Car Forward|Diameter(cm) %distance|Wheel Diameter(mm) %diameter"
     //% weight=88
     export function StpCarMove(distance: number, diameter: number): void {
 		if (!initialized) {
@@ -278,7 +278,7 @@ namespace bainker1 {
 	 * @param diameter diameter of wheel in mm; eg: 48
 	 * @param track track width of car; eg: 125
 	*/
-	//% blockId=bainker1_stpcar_turn block="Car Turn|Degree %turn|Wheel Diameter(mm) %diameter|Track(mm) %track"
+	//% blockId=bainker_stpcar_turn block="Car Turn|Degree %turn|Wheel Diameter(mm) %diameter|Track(mm) %track"
     //% weight=87
 	//% blockGap=50
     export function StpCarTurn(turn: number, diameter: number, track: number): void {
@@ -293,7 +293,7 @@ namespace bainker1 {
         MotorStopAll()
     }
 
-    //% blockId=bainker1_motor_run block="Motor|%index|speed %speed"
+    //% blockId=bainker_motor_run block="Motor|%index|speed %speed"
     //% weight=85
     //% speed.min=-255 speed.max=255
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
@@ -329,7 +329,7 @@ namespace bainker1 {
 	 * @param motor2 Second Motor; eg: M2A, M2B
 	 * @param speed2 [-255-255] speed of motor; eg: 150, -150
 	*/
-    //% blockId=bainker1_motor_dual block="Motor|%motor1|speed %speed1|%motor2|speed %speed2"
+    //% blockId=bainker_motor_dual block="Motor|%motor1|speed %speed1|%motor2|speed %speed2"
     //% weight=84
     //% speed1.min=-255 speed1.max=255
     //% speed2.min=-255 speed2.max=255
@@ -345,7 +345,7 @@ namespace bainker1 {
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	 * @param delay seconde delay to stop; eg: 1
 	*/
-    //% blockId=bainker1_motor_rundelay block="Motor|%index|speed %speed|delay %delay|s"
+    //% blockId=bainker_motor_rundelay block="Motor|%index|speed %speed|delay %delay|s"
     //% weight=81
     //% speed.min=-255 speed.max=255
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
@@ -357,13 +357,13 @@ namespace bainker1 {
 
 
 
-    //% blockId=bainker1_stop block="Motor Stop|%index|"
+    //% blockId=bainker_stop block="Motor Stop|%index|"
     //% weight=80
     export function MotorStop(index: Motors): void {
         MotorRun(index, 0);
     }
 
-    //% blockId=bainker1_stop_all block="Motor Stop All"
+    //% blockId=bainker_stop_all block="Motor Stop All"
     //% weight=79
     //% blockGap=50
     export function MotorStopAll(): void {
@@ -372,7 +372,7 @@ namespace bainker1 {
         }
     }
 	
-	//% blockId=bainker1_forward="Forward"
+	//% blockId=bainker_forward="Forward"
     //% weight=79
     //% blockGap=50
     export function Forward(speed:number, delay: number): void {
