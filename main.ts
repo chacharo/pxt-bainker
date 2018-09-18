@@ -5,7 +5,7 @@ load dependency
 */
 
 
-//% color="#0095d9" weight=10 icon="\uf1b2" block="Bansot"
+//% color="#0095d9" weight=10 icon="\uf1b2" block="Bainker"
 namespace bainker {
     const PCA9685_ADDRESS = 0x40
     const MODE1 = 0x00
@@ -112,8 +112,8 @@ namespace bainker {
         i2cwrite(PCA9685_ADDRESS, MODE1, 0x00)
         setFreq(50);
         for (let idx = 0; idx < 16; idx++) {
-			setPwm(idx, 0 ,0);
-		}
+            setPwm(idx, 0, 0);
+        }
         initialized = true
     }
 
@@ -252,44 +252,44 @@ namespace bainker {
 
         MotorStopAll()
     }
-	
+
 	/**
 	 * Stepper Car move forward
 	 * @param distance Distance to move in cm; eg: 10, 20
 	 * @param diameter diameter of wheel in mm; eg: 48
 	*/
-	//% blockId=bainker_stpcar_move block="Car Forward|Diameter(cm) %distance|Wheel Diameter(mm) %diameter"
+    //% blockId=bainker_stpcar_move block="Car Forward|Diameter(cm) %distance|Wheel Diameter(mm) %diameter"
     //% weight=88
     export function StpCarMove(distance: number, diameter: number): void {
-		if (!initialized) {
+        if (!initialized) {
             initPCA9685()
         }
-		let delay = 10240 * 10 * distance / 3 / diameter; // use 3 instead of pi
-		setStepper(1, delay > 0);
+        let delay = 10240 * 10 * distance / 3 / diameter; // use 3 instead of pi
+        setStepper(1, delay > 0);
         setStepper(2, delay > 0);
-		delay = Math.abs(delay);
-		basic.pause(delay);
-        MotorStopAll()	
+        delay = Math.abs(delay);
+        basic.pause(delay);
+        MotorStopAll()
     }
-	
+
 	/**
 	 * Stepper Car turn by degree
 	 * @param turn Degree to turn; eg: 90, 180, 360
 	 * @param diameter diameter of wheel in mm; eg: 48
 	 * @param track track width of car; eg: 125
 	*/
-	//% blockId=bainker_stpcar_turn block="Car Turn|Degree %turn|Wheel Diameter(mm) %diameter|Track(mm) %track"
+    //% blockId=bainker_stpcar_turn block="Car Turn|Degree %turn|Wheel Diameter(mm) %diameter|Track(mm) %track"
     //% weight=87
-	//% blockGap=50
+    //% blockGap=50
     export function StpCarTurn(turn: number, diameter: number, track: number): void {
-		if (!initialized) {
+        if (!initialized) {
             initPCA9685()
         }
-		let delay = 10240 * turn * track / 360 / diameter;
-		setStepper(1, delay < 0);
+        let delay = 10240 * turn * track / 360 / diameter;
+        setStepper(1, delay < 0);
         setStepper(2, delay > 0);
-		delay = Math.abs(delay);
-		basic.pause(delay);
+        delay = Math.abs(delay);
+        basic.pause(delay);
         MotorStopAll()
     }
 
@@ -371,16 +371,22 @@ namespace bainker {
             stopMotor(idx);
         }
     }
-	
-	//% blockId=bainker_forward="Forward"
+
+    /**
+	 * Forward car with delay
+	 * @param speed [-255-255] speed of motor; eg: 150, -150
+	 * @param delay seconde delay to stop; eg: 1
+	*/
+    //% blockId=bainker_forward block="Forward|speed %speed |delay %delay|s"
     //% weight=79
     //% blockGap=50
-    export function Forward(speed:number, delay: number): void {
+    //% speed.min=-255 speed.max=255
+    export function Forward(speed: number, delay: number): void {
         MotorRun(M1A, speed);
-		MotorRun(M1B, speed);
-		basic.pause(delay * 1000);
-		stopMotor(1);
-		stopMotor(2);
+        MotorRun(M1B, speed);
+        basic.pause(delay * 1000);
+        MotorRun(M1A, 0);
+        MotorRun(M1B, 0);
     }
 
 
