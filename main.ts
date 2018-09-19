@@ -294,7 +294,7 @@ namespace bainker {
     /**
 	 * Forward car with delay
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
-	 * @param delay seconde delay to stop; eg: 1
+	 * @param delay seconde delay to stop; eg: 100
 	*/
     //% blockId=bainker_forward block="Forward|speed %speed |delay %delay|s"
     //% weight=79
@@ -302,7 +302,7 @@ namespace bainker {
     export function Forward(speed: number, delay: number): void {
         MotorRun(1, speed);
         MotorRun(2, speed);
-        basic.pause(delay * 1000);
+        basic.pause(delay);
         MotorRun(1, 0);
         MotorRun(2, 0);
     }
@@ -310,7 +310,7 @@ namespace bainker {
 	/**
 	 * Back car with delay
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
-	 * @param delay seconde delay to stop; eg: 1
+	 * @param delay seconde delay to stop; eg: 100
 	*/
     //% blockId=bainker_back block="Back|speed %speed |delay %delay|s"
     //% weight=79
@@ -318,7 +318,7 @@ namespace bainker {
     export function Back(speed: number, delay: number): void {
         MotorRun(1, speed);
         MotorRun(2, speed);
-        basic.pause(delay * 1000);
+        basic.pause(delay);
         MotorRun(1, 0);
         MotorRun(2, 0);
     }
@@ -326,7 +326,7 @@ namespace bainker {
 	/**
 	 * Turn left with delay
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
-	 * @param delay seconde delay to stop; eg: 1
+	 * @param delay seconde delay to stop; eg: 100
 	*/
     //% blockId=bainker_turnLeft block="Turn Left|speed %speed |delay %delay|s"
     //% weight=79
@@ -334,7 +334,7 @@ namespace bainker {
     export function TurnLeft(speed: number, delay: number): void {
         MotorRun(1, -speed);
         MotorRun(2, speed);
-        basic.pause(delay * 1000);
+        basic.pause(delay);
         MotorRun(1, 0);
         MotorRun(2, 0);
     }
@@ -342,7 +342,7 @@ namespace bainker {
 	/**
 	 * Turn right with delay
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
-	 * @param delay seconde delay to stop; eg: 1
+	 * @param delay seconde delay to stop; eg: 100
 	*/
     //% blockId=bainker_turnRight block="Turn right|speed %speed |delay %delay|s"
     //% weight=79
@@ -350,7 +350,7 @@ namespace bainker {
     export function TurnRight(speed: number, delay: number): void {
         MotorRun(1, speed);
         MotorRun(2, -speed);
-        basic.pause(delay * 1000);
+        basic.pause(delay);
         MotorRun(1, 0);
         MotorRun(2, 0);
     }
@@ -380,7 +380,7 @@ namespace bainker {
     /**
 	 * Tracking count cross
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
-	 * @param delay seconde delay to stop; eg: 1
+	 * @param delay seconde delay to stop; eg: 0
 	*/
     //% blockId=bainker_countCross block="Tracking |speed %speed|CrossL %crossL|CrossR %crossR|delay %delay"
     //% weight=79
@@ -388,25 +388,32 @@ namespace bainker {
     //% crossL.min=0 crossL.max=99
     //% crossR.min=0 crossR.max=99
     export function countCross(speed: number, crossL: number, crossR: number, delay: number): void {
-        let CL = 0;
-        let CR = 0;
         let TL = 0;
         let TR = 0;
+        let CL = 0;
+        let CR = 0;
         while (crossL > CL || crossR > CR) {
-            if (pins.digitalReadPin(DigitalPin.P13) == 1) {
+            if (pins.digitalReadPin(DigitalPin.P13) == 1 && pins.digitalReadPin(DigitalPin.P14) == 1) {
                 MotorRun(2, speed);
-            } else { MotorRun(2, 0); }
-            if (pins.digitalReadPin(DigitalPin.P14) == 1) {
                 MotorRun(1, speed);
-            } else { MotorRun(1, 0); }
+            } else if (pins.digitalReadPin(DigitalPin.P13) == 0 && pins.digitalReadPin(DigitalPin.P14) == 0) {
+                MotorRun(2, 0);
+                MotorRun(1, 0);       
+            } else {
+                if (pins.digitalReadPin(DigitalPin.P14) == 0) {
+                    MotorRun(1, -speed);
+                } else { 
+                    MotorRun(2, -speed); 
+                }
+            }
             if (pins.digitalReadPin(DigitalPin.P12) == 0 && input.runningTime() - TR > 1000) {
-                CR+=1;
+                CR += 1;
                 TR = input.runningTime();
             }
             if (pins.digitalReadPin(DigitalPin.P15) == 0 && input.runningTime() - TL > 1000) {
                 CL += 1;
                 TL = input.runningTime();
-            }
+            }  
         }
         basic.pause(delay);
         MotorRun(1, 0);
