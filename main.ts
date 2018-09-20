@@ -397,7 +397,7 @@ namespace bainker {
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	 * @param delay seconde delay to stop; eg: 0
 	*/
-    //% blockId=bainker_countCross block="Tracking & countting |Speed %speed|Left cross No. %crossL|Right cross No. %crossR|Stop Delay(ms) %delay"
+    //% blockId=bainker_countCross block="Tracking & countting|Speed %speed|Left cross No. %crossL|Right cross No. %crossR|Stop Delay(ms) %delay"
     //% weight=79
     //% speed.min=-255 speed.max=255
     //% crossL.min=0 crossL.max=99
