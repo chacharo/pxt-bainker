@@ -8,7 +8,7 @@
     },
     "files": [
         "README.md",
-        "main.ts",
+        "bainker.ts",
         "_locales/zh/bainker-strings.json"
     ],
     "testFiles": [
