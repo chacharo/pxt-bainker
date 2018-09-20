@@ -196,7 +196,7 @@ namespace bainker {
 	 * @param index Servo Channel; eg: S1
 	 * @param degree [0-180] degree of servo; eg: 0, 90, 180
 	*/
-    //% blockId=bansotblocks_servo block="Servo|%index|degree %degree"
+    //% blockId=bainker_servo block="Servo|%index|degree %degree"
     //% weight=100
     //% blockGap=50
     //% degree.min=0 degree.max=180
@@ -296,7 +296,7 @@ namespace bainker {
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	 * @param delay seconde delay to stop; eg: 100
 	*/
-    //% blockId=bainker_forward block="Forward|speed %speed |delay %delay|s"
+    //% blockId=bainker_forward block="Forward|Speed %speed |Delay(ms) %delay"
     //% weight=79
     //% speed.min=-255 speed.max=255
     export function Forward(speed: number, delay: number): void {
@@ -312,7 +312,7 @@ namespace bainker {
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	 * @param delay seconde delay to stop; eg: 100
 	*/
-    //% blockId=bainker_back block="Back|speed %speed |delay %delay|s"
+    //% blockId=bainker_back block="Back|speed %speed |delay(ms) %delay"
     //% weight=79
     //% speed.min=-255 speed.max=255
     export function Back(speed: number, delay: number): void {
@@ -328,7 +328,7 @@ namespace bainker {
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	 * @param delay seconde delay to stop; eg: 100
 	*/
-    //% blockId=bainker_turnLeft block="Turn Left|speed %speed |delay %delay|s"
+    //% blockId=bainker_turnLeft block="Turn left|Speed %speed |Delay(ms) %delay"
     //% weight=79
     //% speed.min=-255 speed.max=255
     export function TurnLeft(speed: number, delay: number): void {
@@ -344,7 +344,7 @@ namespace bainker {
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	 * @param delay seconde delay to stop; eg: 100
 	*/
-    //% blockId=bainker_turnRight block="Turn right|speed %speed |delay %delay|s"
+    //% blockId=bainker_turnRight block="Turn right|Speed %speed |Delay(ms) %delay"
     //% weight=79
     //% speed.min=-255 speed.max=255
     export function TurnRight(speed: number, delay: number): void {
@@ -359,7 +359,7 @@ namespace bainker {
 	 * Car left speed
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	*/
-    //% blockId=bainker_leftSpeed block="Left Speed|speed %speed"
+    //% blockId=bainker_leftSpeed block="Left Speed %speed"
     //% weight=79
     //% speed.min=-255 speed.max=255
     export function LeftSpeed(speed: number): void {
@@ -370,11 +370,26 @@ namespace bainker {
 	 * Car right speed
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	*/
-    //% blockId=bainker_rightSpeed block="Right Speed|speed %speed"
+    //% blockId=bainker_rightSpeed block="Right Speed %speed"
     //% weight=79
     //% speed.min=-255 speed.max=255
     export function RightSpeed(speed: number): void {
         MotorRun(2, speed);
+    }
+	
+	/**
+	 * Car Dual speed delay
+	 * @param speed [-255-255] speed of motor; eg: 150, -150
+	*/
+    //% blockId=bainker_rightSpeed block="Left speed %speedL|Right speed %speedR|Delay(ms) %delay"
+    //% weight=79
+    //% speed.min=-255 speed.max=255
+    export function DualSpeedDelay(speedL: number, speedR: number, delay: number): void {
+        MotorRun(1, speedL);
+		MotorRun(2, speedR);
+		basic.pause(delay);
+        MotorRun(1, 0);
+        MotorRun(2, 0);
     }
 
     /**
@@ -382,12 +397,12 @@ namespace bainker {
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	 * @param delay seconde delay to stop; eg: 0
 	*/
-    //% blockId=bainker_countCross block="Tracking |speed %speed|CrossL %crossL|CrossR %crossR|delay %delay"
+    //% blockId=bainker_countCross block="Tracking & countting |Speed %speed|Left cross No. %crossL|Right cross No. %crossR|Stop Delay(ms) %delay"
     //% weight=79
     //% speed.min=-255 speed.max=255
     //% crossL.min=0 crossL.max=99
     //% crossR.min=0 crossR.max=99
-    export function countCross(speed: number, crossL: number, crossR: number, delay: number): void {
+    export function CountCross(speed: number, crossL: number, crossR: number, delay: number): void {
         let TL = 0;
         let TR = 0;
         let CL = 0;
