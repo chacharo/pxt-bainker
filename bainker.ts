@@ -328,7 +328,7 @@ namespace bainker {
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	 * @param delay seconde delay to stop; eg: 100
 	*/
-    //% blockId=bainker_turnLeft block="Turn left|Speed %speed |Delay(ms) %delay"
+    //% blockId=bainker_turn_left block="Turn left|Speed %speed |Delay(ms) %delay"
     //% weight=79
     //% speed.min=-255 speed.max=255
     export function TurnLeft(speed: number, delay: number): void {
@@ -344,7 +344,7 @@ namespace bainker {
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	 * @param delay seconde delay to stop; eg: 100
 	*/
-    //% blockId=bainker_turnRight block="Turn right|Speed %speed |Delay(ms) %delay"
+    //% blockId=bainker_turn_right block="Turn right|Speed %speed |Delay(ms) %delay"
     //% weight=79
     //% speed.min=-255 speed.max=255
     export function TurnRight(speed: number, delay: number): void {
@@ -359,7 +359,7 @@ namespace bainker {
 	 * Car left speed
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	*/
-    //% blockId=bainker_leftSpeed block="Left Speed %speed"
+    //% blockId=bainker_left_speed block="Left Speed %speed"
     //% weight=79
     //% speed.min=-255 speed.max=255
     export function LeftSpeed(speed: number): void {
@@ -370,7 +370,7 @@ namespace bainker {
 	 * Car right speed
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	*/
-    //% blockId=bainker_rightSpeed block="Right Speed %speed"
+    //% blockId=bainker_right_speed block="Right Speed %speed"
     //% weight=79
     //% speed.min=-255 speed.max=255
     export function RightSpeed(speed: number): void {
@@ -381,7 +381,7 @@ namespace bainker {
 	 * Car Dual speed delay
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	*/
-    //% blockId=bainker_rightSpeed block="Left speed %speedL|Right speed %speedR|Delay(ms) %delay"
+    //% blockId=bainker_dual_speed_delay block="Left speed %speedL|Right speed %speedR|Delay(ms) %delay"
     //% weight=79
     //% speed.min=-255 speed.max=255
     export function DualSpeedDelay(speedL: number, speedR: number, delay: number): void {
@@ -397,7 +397,7 @@ namespace bainker {
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
 	 * @param delay seconde delay to stop; eg: 0
 	*/
-    //% blockId=bainker_countCross block="Tracking & countting|Speed %speed|Left cross No. %crossL|Right cross No. %crossR|Stop Delay(ms) %delay"
+    //% blockId=bainker_count_cross block="Tracking & countting|Speed %speed|Left cross No. %crossL|Right cross No. %crossR|Stop Delay(ms) %delay"
     //% weight=79
     //% speed.min=-255 speed.max=255
     //% crossL.min=0 crossL.max=99
