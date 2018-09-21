@@ -430,6 +430,8 @@ namespace bainker {
                 TL = input.runningTime();
             }  
         }
+		MotorRun(2, speed);
+        MotorRun(1, speed);
         basic.pause(delay);
         MotorRun(1, 0);
         MotorRun(2, 0);
