@@ -5,7 +5,7 @@ load dependency
 */
 
 
-//% color="#2eaa55" weight=10 icon="\uf378" block="Bainker"
+//% color="#2eaa55" weight=10 icon="\uf1a3" block="Bainker"
 namespace bainker {
     const PCA9685_ADDRESS = 0x40
     const MODE1 = 0x00
