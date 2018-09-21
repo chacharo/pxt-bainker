@@ -316,8 +316,8 @@ namespace bainker {
     //% weight=79
     //% speed.min=-255 speed.max=255
     export function Back(speed: number, delay: number): void {
-        MotorRun(1, speed);
-        MotorRun(2, speed);
+        MotorRun(1, -speed);
+        MotorRun(2, -speed);
         basic.pause(delay);
         MotorRun(1, 0);
         MotorRun(2, 0);
