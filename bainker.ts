@@ -426,14 +426,14 @@ namespace bainker {
                 TR = input.runningTime();
 				MotorRun(2, speed);
                 MotorRun(1, speed);
-				basic.pause(100);
+				basic.pause(20);
             }
             if (pins.digitalReadPin(DigitalPin.P15) == 0 && input.runningTime() - TL > 1000) {
                 CL += 1;
                 TL = input.runningTime();
 				MotorRun(2, speed);
                 MotorRun(1, speed);
-				basic.pause(100);
+				basic.pause(20);
             }  
         }
 		MotorRun(2, speed);
