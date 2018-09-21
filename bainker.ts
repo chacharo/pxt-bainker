@@ -376,7 +376,7 @@ namespace bainker {
     export function RightSpeed(speed: number): void {
         MotorRun(2, speed);
     }
-	
+
 	/**
 	 * Car Dual speed delay
 	 * @param speed [-255-255] speed of motor; eg: 150, -150
@@ -386,8 +386,8 @@ namespace bainker {
     //% speed.min=-255 speed.max=255
     export function DualSpeedDelay(speedL: number, speedR: number, delay: number): void {
         MotorRun(1, speedL);
-		MotorRun(2, speedR);
-		basic.pause(delay);
+        MotorRun(2, speedR);
+        basic.pause(delay);
         MotorRun(1, 0);
         MotorRun(2, 0);
     }
@@ -413,31 +413,31 @@ namespace bainker {
                 MotorRun(1, speed);
             } else if (pins.digitalReadPin(DigitalPin.P13) == 0 && pins.digitalReadPin(DigitalPin.P14) == 0) {
                 MotorRun(2, 0);
-                MotorRun(1, 0);       
+                MotorRun(1, 0);
             } else {
                 if (pins.digitalReadPin(DigitalPin.P14) == 0) {
                     MotorRun(1, -speed);
-                } else { 
-                    MotorRun(2, -speed); 
+                    MotorRun(2, speed);
+                } else {
+                    MotorRun(1, speed);
+                    MotorRun(2, -speed);
                 }
             }
-            if (pins.digitalReadPin(DigitalPin.P12) == 0 && input.runningTime() - TR > 1000) {
+            if (pins.digitalReadPin(DigitalPin.P12) == 0) {
+                while (pins.digitalReadPin(DigitalPin.P12) == 0) {
+                    MotorRun(2, speed);
+                    MotorRun(1, speed);
+                }
                 CR += 1;
-                TR = input.runningTime();
-				MotorRun(2, speed);
-                MotorRun(1, speed);
-				basic.pause(20);
             }
-            if (pins.digitalReadPin(DigitalPin.P15) == 0 && input.runningTime() - TL > 1000) {
+            if (pins.digitalReadPin(DigitalPin.P15) == 0) {
+                while (pins.digitalReadPin(DigitalPin.P15) == 0) {
+                    MotorRun(2, speed);
+                    MotorRun(1, speed);
+                }
                 CL += 1;
-                TL = input.runningTime();
-				MotorRun(2, speed);
-                MotorRun(1, speed);
-				basic.pause(20);
-            }  
+            }
         }
-		MotorRun(2, speed);
-        MotorRun(1, speed);
         basic.pause(delay);
         MotorRun(1, 0);
         MotorRun(2, 0);
@@ -445,3 +445,4 @@ namespace bainker {
 
 
 }
+ 
