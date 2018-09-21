@@ -424,10 +424,16 @@ namespace bainker {
             if (pins.digitalReadPin(DigitalPin.P12) == 0 && input.runningTime() - TR > 1000) {
                 CR += 1;
                 TR = input.runningTime();
+				MotorRun(2, speed);
+                MotorRun(1, speed);
+				basic.pause(100);
             }
             if (pins.digitalReadPin(DigitalPin.P15) == 0 && input.runningTime() - TL > 1000) {
                 CL += 1;
                 TL = input.runningTime();
+				MotorRun(2, speed);
+                MotorRun(1, speed);
+				basic.pause(100);
             }  
         }
 		MotorRun(2, speed);
