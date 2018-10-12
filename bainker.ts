@@ -429,6 +429,7 @@ namespace bainker {
                     MotorRun(1, speed);
                 }
                 CR += 1;
+				basic.pause(100);
             }
             if (pins.digitalReadPin(DigitalPin.P15) == 0) {
                 while (pins.digitalReadPin(DigitalPin.P15) == 0) {
@@ -436,6 +437,7 @@ namespace bainker {
                     MotorRun(1, speed);
                 }
                 CL += 1;
+				basic.pause(100);
             }
         }
         basic.pause(delay);
