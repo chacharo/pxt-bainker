@@ -425,8 +425,12 @@ namespace bainker {
             }
             if (pins.digitalReadPin(DigitalPin.P12) == 0) {
                 while (pins.digitalReadPin(DigitalPin.P12) == 0) {
-                    MotorRun(2, speed);
+					MotorRun(2, speed);
                     MotorRun(1, speed);
+					if (pins.digitalReadPin(DigitalPin.P15) == 0) {
+						while (pins.digitalReadPin(DigitalPin.P15) == 0);
+						CL += 1;
+					}
                 }
                 CR += 1;
             }
@@ -434,6 +438,10 @@ namespace bainker {
                 while (pins.digitalReadPin(DigitalPin.P15) == 0) {
                     MotorRun(2, speed);
                     MotorRun(1, speed);
+					if (pins.digitalReadPin(DigitalPin.P12) == 0) {
+						while (pins.digitalReadPin(DigitalPin.P12) == 0);
+						CR += 1;
+					}
                 }
                 CL += 1;
             }
